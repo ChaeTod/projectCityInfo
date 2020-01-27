@@ -1,9 +1,5 @@
 package sample;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +47,24 @@ public class Database {
             return list;
         } catch (
                 Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getPopulation(String cityName){
+        try {
+            PreparedStatement ps = getConnection().prepareStatement("SELECT json_extract(Info, '$.Population') AS Population FROM city WHERE city.Name LIKE ?");
+            ps.setString(1, cityName);
+            ps.executeQuery();
+            String population = null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                population = rs.getString("Population");
+            }
+            ps.close();
+            return population;
+        } catch (Exception e){
             e.printStackTrace();
         }
         return null;

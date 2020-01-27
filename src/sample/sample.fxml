@@ -12,16 +12,16 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Pane prefHeight="200.0" prefWidth="500.0">
+      <Pane prefHeight="200.0" prefWidth="700.0">
          <children>
-            <Button fx:id="okBtn" layoutX="425.0" layoutY="161.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="OK" />
+            <Button fx:id="okBtn" layoutX="564.0" layoutY="161.0" mnemonicParsing="false" onAction="#getAllInfo" prefHeight="25.0" prefWidth="100.0" text="OK" />
             <ComboBox fx:id="comboBox1" layoutX="14.0" layoutY="107.0" onAction="#showNextSelect" onShowing="#selectCountries" prefWidth="150.0" />
             <Label layoutX="24.0" layoutY="75.0" text="Select the Country">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="157.0" layoutY="14.0" text="City Information">
+            <Label layoutX="259.0" layoutY="14.0" text="City Information">
                <font>
                   <Font size="26.0" />
                </font>
@@ -31,7 +31,12 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <ComboBox fx:id="comboBox2" layoutX="202.0" layoutY="107.0" onShowing="#selectCities" prefWidth="150.0" visible="false" />
+            <ComboBox fx:id="comboBox2" layoutX="202.0" layoutY="107.0" onAction="#showAllLabels" onShowing="#selectCities" prefWidth="150.0" visible="false" />
+            <Label fx:id="weatherLabel" layoutX="445.0" layoutY="58.0" text="Weather" visible="false" />
+            <Label fx:id="populationLabel" layoutX="444.0" layoutY="92.0" text="Population" visible="false" />
+            <Label layoutX="445.0" layoutY="124.0" text="Label" visible="false" />
+            <Label layoutX="542.0" layoutY="58.0" text="Label" />
+            <Label fx:id="popValueLbl" layoutX="533.0" layoutY="92.0" prefHeight="17.0" prefWidth="45.0" textAlignment="CENTER" />
          </children></Pane>
    </children>
 </GridPane>

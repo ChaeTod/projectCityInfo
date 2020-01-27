@@ -17,10 +17,12 @@ public class Controller {
     public Label cityLabel;
     public ComboBox comboBox2;
     public Button okBtn;
-
-    //private ObservableList<String> stationsList = FXCollections.observableArrayList();
+    public Label weatherLabel;
+    public Label populationLabel;
+    public Label popValueLbl;
 
     List<String> countries;
+
     public Controller() throws SQLException, ClassNotFoundException {
         //Database database = new Database();
         //countries = database.getCountries();
@@ -38,21 +40,22 @@ public class Controller {
  */
     }
 
-    public String getComboBox1Value(){
+    public String getComboBox1Value() {
         return (String) comboBox1.getValue();
+    }
+
+    public String getComboBox2Value() {
+        return (String) comboBox2.getValue();
     }
 
     public void selectCountries(Event event) throws SQLException, ClassNotFoundException {
         Database data = new Database();
         comboBox1.getItems().setAll(data.getCountries());
-        //getComboBox1Value();
-        if (getComboBox1Value() != null)
-            System.out.println(getComboBox1Value());
     }
 
     public void selectCities(Event event) throws SQLException, ClassNotFoundException {
-       Database database = new Database();
-       comboBox2.getItems().setAll(database.getCities(getComboBox1Value()));
+        Database database = new Database();
+        comboBox2.getItems().setAll(database.getCities(getComboBox1Value()));
     }
 
     public void showNextSelect(ActionEvent actionEvent) {
@@ -62,6 +65,14 @@ public class Controller {
         }
     }
 
+    public void showAllLabels(ActionEvent actionEvent) {
+        weatherLabel.setVisible(true);
+        populationLabel.setVisible(true);
+        popValueLbl.setVisible(true);
+    }
 
-
+    public void getAllInfo(ActionEvent actionEvent) {
+        Database database = new Database();
+        popValueLbl.setText(database.getPopulation(getComboBox2Value()));
+    }
 }
