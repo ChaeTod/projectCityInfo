@@ -52,14 +52,7 @@ public class Controller {
 
     public void selectCities(Event event) throws SQLException, ClassNotFoundException {
        Database database = new Database();
-       comboBox2.getItems().setAll(database.getCities());
-        /*
-        Database data = new Database();
-        //data.showComboList();
-        comboBox2.getItems().setAll(data.getCities());
-        System.out.println(getComboBox1Value());
-
-        */
+       comboBox2.getItems().setAll(database.getCities(getComboBox1Value()));
     }
 
     public void showNextSelect(ActionEvent actionEvent) {

@@ -10,15 +10,6 @@ import java.util.List;
 
 public class Database {
 
-    Controller key = new Controller();
-
-    public Database() throws SQLException, ClassNotFoundException {
-    }
-
-    //public Database() throws SQLException, ClassNotFoundException {
-
-    //}
-
     private Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection("jdbc:mysql://itsovy.sk:3306/world_x?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "student", "kosice2019");
@@ -45,26 +36,15 @@ public class Database {
         return null;
     }
 
-/*
-    public void showComboList(){
-        String countryName = key.getComboBox1Value();
-        System.out.println(countryName);
-    }
-
-
- */
-
-    public List getCities() {
-        String countryName = key.getComboBox1Value();
-        System.out.println(countryName);
+    public List getCities(String countryName) {
         try {
+            System.out.println(countryName);
             PreparedStatement ps = getConnection().prepareStatement("SELECT * FROM city JOIN country ON country.Code = city.CountryCode WHERE country.Name LIKE ?");
             ps.setString(1, countryName);
             List<String> list = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(rs.getString("Name"));
-                //countryList.add(rs.getString("Name"));
             }
             ps.close();
             rs.close();
