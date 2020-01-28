@@ -7,10 +7,21 @@ import javafx.event.Event;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 
+import javax.swing.*;
 import javax.xml.crypto.Data;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class Controller {
     public ComboBox comboBox1;
@@ -20,12 +31,15 @@ public class Controller {
     public Label weatherLabel;
     public Label populationLabel;
     public Label popValueLbl;
+    public Label cityLbl;
+    public Label countryLbl;
+    private List<City> cities; // create a list Cities
 
-    List<String> countries;
+    List<String> countries;  // create a list of Countries
 
     public Controller() throws SQLException, ClassNotFoundException {
-        //Database database = new Database();
-        //countries = database.getCountries();
+        Database database = new Database();
+        countries = database.getCountries();
 
         //comboBox1.setItems(FXCollections.observableArrayList(countries));
 
@@ -40,6 +54,23 @@ public class Controller {
  */
     }
 
+    /* old functions
+        public void getCountry(){
+            String country = null;
+            country = (String) comboBox1.getValue();
+            List<City> cities;
+            if (country != null){
+                Database db = new Database();
+                cities = db.getCountries();
+                comboBox2.getItems().clear();
+                for (City s : cities){
+                    System.out.println(s.getName());
+                    comboBox2.getItems().add(s.getName());
+                }
+                comboBox2.setDisable(false);
+            }
+        }
+    */
     public String getComboBox1Value() {
         return (String) comboBox1.getValue();
     }
@@ -49,19 +80,34 @@ public class Controller {
     }
 
     public void selectCountries(Event event) throws SQLException, ClassNotFoundException {
-        Database data = new Database();
-        comboBox1.getItems().setAll(data.getCountries());
+        //Database data = new Database();
+        comboBox1.getItems().setAll(countries);
     }
 
     public void selectCities(Event event) throws SQLException, ClassNotFoundException {
+        String country = null;
+        country = getComboBox1Value();  // get the value from the first comboBox
+        if (country != null) {  //if the value from the first comboBox not null
+            Database db = new Database(); // create a new object db with Database type
+            cities = db.getCities(country); // write all info about the selected country into the list of Cities
+            comboBox2.getItems().clear(); // clear the previous items from second comboBox
+            for (City s : cities) { // go though all cities
+                //System.out.println(s.getName());
+                comboBox2.getItems().add(s.getName()); // fill the second comboBox with the names of the cities in the selected country
+            }
+            comboBox2.setDisable(false); // enable the second comboBox
+        }
+        /*
         Database database = new Database();
         comboBox2.getItems().setAll(database.getCities(getComboBox1Value()));
+         */
     }
 
     public void showNextSelect(ActionEvent actionEvent) {
         if (getComboBox1Value() != null) {
-            cityLabel.setVisible(true);
-            comboBox2.setVisible(true);
+            //cityLabel.setVisible(true);
+            //comboBox2.setVisible(true);
+            comboBox2.setDisable(false);
         }
     }
 
@@ -69,10 +115,74 @@ public class Controller {
         weatherLabel.setVisible(true);
         populationLabel.setVisible(true);
         popValueLbl.setVisible(true);
+        okBtn.setDisable(false);
+    }
+/*
+    public void getCity() {
+
+
     }
 
+ */
+
     public void getAllInfo(ActionEvent actionEvent) {
-        Database database = new Database();
-        popValueLbl.setText(database.getPopulation(getComboBox2Value()));
+        String cityName = getComboBox2Value();
+        City city = null;  // create an object with type City
+        for (City c : cities) { //run through cities list
+            if (c.getName().equals(cityName)) { //if found city.Name in list cities which is equal to the cityName that we selected in first comboBox
+                city = c; //set to null object city all the data (city.Name, country.Name, population and etc.) from the found city in the list. Now we're able to work with it.
+                break; // if OK - stop further iterations
+            }
+        }
+
+        if (city == null)  // condition to avoid a NullPointerException
+            return;
+
+        cityLbl.setText("City:         " + city.getName());
+        countryLbl.setText("Country:      " + city.getCountry() + " (" + city.getCode2() + ")");
+        populationLabel.setText("Population:    " + formatPopulation(city.getPopulation()));
+
     }
+    /*
+    public static void MyGETRequest() throws IOException {  //some API Connector
+        URL urlForGetRequest = new URL("https://jsonplaceholder.typicode.com/posts/1");
+        String readLine = null;
+        HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
+        conection.setRequestMethod("GET");
+        conection.setRequestProperty("userId", "a1bcdef"); // set userId its a sample here
+        int responseCode = conection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conection.getInputStream()));
+            StringBuffer response = new StringBuffer();
+            while ((readLine = in .readLine()) != null) {
+                response.append(readLine);
+            } in .close();
+            // print result
+            System.out.println("JSON String Result " + response.toString());
+            //GetAndPost.POSTRequest(response.toString());
+        } else {
+            System.out.println("GET NOT WORKED");
+        }
+    }
+    */
+
+    private String formatPopulation(int population) { // format the population result
+        DecimalFormat df = new DecimalFormat("#,###,###");
+        DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
+        symbols.setGroupingSeparator(' ');
+        df.setDecimalFormatSymbols(symbols);
+        return df.format(population);
+    }
+
+    public void switchToFirstCity(KeyEvent keyEvent) { // the method to switch old cities into the new one if the user will choose another country
+        /*
+        Database data = new Database();
+        //comboBox2.set
+        comboBox2.getSelectionModel().selectFirst(data.getCities(getComboBox1Value()).);
+        //comboBox2.getItems().setAll(data.getCities(getComboBox1Value()));
+
+         */
+    }
+
 }

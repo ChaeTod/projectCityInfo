@@ -7,12 +7,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    //GetAndPost.MyGETRequest(); // call the connector to the API
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Get some info about a City");
-        primaryStage.setScene(new Scene(root, 700, 200));
+        primaryStage.setScene(new Scene(root, 560, 270));
         primaryStage.show();
     }
 
