@@ -1,0 +1,11 @@
+
+Dsquid:S1170	"!Make this final field static too.(Ü‰ ›ûÿÿÿÿ8·˜ÖÙş-
+?squid:S1170"!Make this final field static too.(ÜüÔº8ÊİÙş-
+Csquid:S2068" Remove this hard-coded password.(Ù¨·«øÿÿÿÿ8Ü›‘±ş-
+Dsquid:S1170
+"!Make this final field static too.(¼òÃùÿÿÿÿ8œ¡×Ùş-
+zsquid:S00116
+"VRename this field "SELECT_CITY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼òÃùÿÿÿÿ8œ¡×Ùş-
+{squid:S00116"\Rename this field "SELECT_POPULATION" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÜüÔº8ÊİÙş-
+Ssquid:S1481"0Remove this unused "countryName" local variable.(ŒÃ‘Âşÿÿÿÿ8Ï¢Å°ş-
+}squid:S00116	"YRename this field "SELECT_COUNTRY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ü‰ ›ûÿÿÿÿ8·˜ÖÙş-

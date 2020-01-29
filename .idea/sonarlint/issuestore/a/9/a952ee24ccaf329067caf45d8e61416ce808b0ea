@@ -1,0 +1,12 @@
+
+¦%squid:RedundantThrowsDeclarationCheckO"nRemove the declaration of thrown exception 'java.sql.SQLException', as it cannot be thrown from method's body.(³–Àú8ª—èßş-
+Osquid:S1172J",Remove this unused method parameter "event".(µ­Ã„ùÿÿÿÿ8ƒÕ˜Ûş-
+Vsquid:S1172’"2Remove this unused method parameter "actionEvent".(‰ƒƒÇÿÿÿÿÿ8‰ª³‚ÿ-
+«%squid:RedundantThrowsDeclarationCheckJ"nRemove the declaration of thrown exception 'java.sql.SQLException', as it cannot be thrown from method's body.(µ­Ã„ùÿÿÿÿ8°”Ûş-
+¶%squid:RedundantThrowsDeclarationCheckJ"yRemove the declaration of thrown exception 'java.lang.ClassNotFoundException', as it cannot be thrown from method's body.(µ­Ã„ùÿÿÿÿ8°”Ûş-
+Jsquid:S1172O",Remove this unused method parameter "event".(³–Àú8ïğÛş-
+·%squid:RedundantThrowsDeclarationCheck’"yRemove the declaration of thrown exception 'java.lang.ClassNotFoundException', as it cannot be thrown from method's body.(‰ƒƒÇÿÿÿÿÿ8¾ã…ÿ-
+Psquid:S1172j"2Remove this unused method parameter "actionEvent".(×µñÎ8ïğÛş-
+Usquid:S1172b"2Remove this unused method parameter "actionEvent".(é—»Íşÿÿÿÿ8ïğÛş-
+¬%squid:RedundantThrowsDeclarationCheck’"nRemove the declaration of thrown exception 'java.sql.SQLException', as it cannot be thrown from method's body.(‰ƒƒÇÿÿÿÿÿ8¾ã…ÿ-
+±%squid:RedundantThrowsDeclarationCheckO"yRemove the declaration of thrown exception 'java.lang.ClassNotFoundException', as it cannot be thrown from method's body.(³–Àú8ª—èßş-

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Pane prefHeight="200.0" prefWidth="500.0">
+         <children>
+            <Button fx:id="okBtn" layoutX="425.0" layoutY="161.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="OK" />
+            <ComboBox fx:id="comboBox1" layoutX="14.0" layoutY="107.0" onAction="#showNextSelect" onShowing="#selectCountries" prefWidth="150.0" />
+            <Label layoutX="24.0" layoutY="75.0" text="Select the Country">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="157.0" layoutY="14.0" text="City Information">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+            <Label fx:id="cityLabel" layoutX="227.0" layoutY="75.0" text="Select the City" visible="false">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="comboBox2" layoutX="202.0" layoutY="107.0" onShowing="#selectCities" prefWidth="150.0" visible="false" />
+         </children></Pane>
+   </children>
+</GridPane>

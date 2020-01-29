@@ -1,7 +1,5 @@
 package sample;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.scene.control.Button;
@@ -9,19 +7,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 
-import javax.swing.*;
-import javax.xml.crypto.Data;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class Controller {
     public ComboBox comboBox1;
@@ -33,6 +23,8 @@ public class Controller {
     public Label popValueLbl;
     public Label cityLbl;
     public Label countryLbl;
+    public Label tempLbl;
+    public Label humidityLbl;
     private List<City> cities; // create a list Cities
 
     List<String> countries;  // create a list of Countries
@@ -118,14 +110,40 @@ public class Controller {
         okBtn.setDisable(false);
     }
 /*
-    public void getCity() {
-
-
+    public String getData() {
+        String cityName = getComboBox2Value();
+        City city = null;  // create an object with type City
+        for (City c : cities) { //run through cities list
+            if (c.getName().equals(cityName)) { //if found city.Name in list cities which is equal to the cityName that we selected in first comboBox
+                city = c; //set to null object city all the data (city.Name, country.Name, population and etc.) from the found city in the list. Now we're able to work with it.
+                break; // if OK - stop further iterations
+            }
+        }
+        if (city == null)
+            return null;
+        String date = city.getName();
+        //date.add(city.getName());
+        return date;
     }
 
- */
+    public String getCode() {
+        String cityName = getComboBox2Value();
+        City city = null;  // create an object with type City
+        for (City c : cities) { //run through cities list
+            if (c.getName().equals(cityName)) { //if found city.Name in list cities which is equal to the cityName that we selected in first comboBox
+                city = c; //set to null object city all the data (city.Name, country.Name, population and etc.) from the found city in the list. Now we're able to work with it.
+                break; // if OK - stop further iterations
+            }
+        }
+        if (city == null)
+            return null;
+        String date = city.getCode2();
+        //date.add(city.getCode2());
+        return date;
+    }
 
-    public void getAllInfo(ActionEvent actionEvent) {
+*/
+    public void getAllInfo(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String cityName = getComboBox2Value();
         City city = null;  // create an object with type City
         for (City c : cities) { //run through cities list
@@ -141,6 +159,17 @@ public class Controller {
         cityLbl.setText("City:         " + city.getName());
         countryLbl.setText("Country:      " + city.getCountry() + " (" + city.getCode2() + ")");
         populationLabel.setText("Population:    " + formatPopulation(city.getPopulation()));
+        Weather weather = new APIWeather().getWeather(city.getName(), city.getCode3());
+        //String temp = String.valueOf(weather.getTemp());
+        String temp = Double.toString(weather.getTemp());
+        String hum = String.valueOf(weather.getHumidity());
+        tempLbl.setText("The temperature: " +temp+ "°");
+        humidityLbl.setText("Humidity: " +hum);
+        //weather.getTemp();
+
+
+        //Weather we = new Weather();
+        //we.showReq();
 
     }
     /*
