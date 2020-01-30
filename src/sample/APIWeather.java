@@ -2,17 +2,24 @@ package sample;
 
 import com.mysql.cj.xdevapi.JsonString;
 import com.sun.xml.internal.ws.api.ha.StickyFeature;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
+
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class APIWeather {
-    static String json = null;
 
     public Weather getWeather(String city, String code2) {
         Weather weather = null;
@@ -31,27 +38,40 @@ public class APIWeather {
                 }
                 br.close();
 
-                json = response.toString();
-                //JSONArray array_obj = (JSONArray) parser_obj.parse(json);
-                //String output = br.readLine();
                 System.out.println(response.toString());
-                //return weather;
 
-                JSONParser parser_obj = new JSONParser();
-                JSONObject myResp = (JSONObject) parser_obj.parse(response.toString());
-                JSONObject main = (JSONObject) myResp.get("main");
+                JSONObject json = new JSONObject(response.toString());
+                double temp = json.getJSONObject("main").getDouble("temp");
+                int humidity = json.getJSONObject("main").getInt("humidity");
+                String cityName = json.getString("name");
+                String countryCode = json.getJSONObject("sys").getString("country");
+                double visibility = json.getDouble("visibility");
 
-                double temp = (double) main.get("temp");
-                long humidity = (long) main.get("humidity");
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                long unix = json.getJSONObject("sys").getLong("sunset");
+                long unix_1 = json.getJSONObject("sys").getLong("sunrise");
+
+                Date now = new Date(unix*1000);
+                Date now_x = new Date(unix_1*1000);
+                String riseTime = sdf.format(now_x);
+                String setTime = sdf.format(now);
+                System.out.println(riseTime);
+                System.out.println(setTime);
+
                 System.out.println("The main temp is: " + temp);
                 System.out.println("The main humidity is: " + humidity);
-                weather = new Weather(null, null, temp, humidity, 0, 0);
-                return weather;
+                System.out.println("The visibility is: " + visibility);
+
+                //return new Weather(cityName, countryCode, temp, humidity, visibility, 0, riseTime, setTime);
+                return new Weather(null, null, temp, humidity, visibility, 0, riseTime, setTime);
+                //weather =
+                //return weather;
+
             }
             //connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return weather;
+        return null;
     }
 }

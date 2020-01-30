@@ -25,6 +25,9 @@ public class Controller {
     public Label countryLbl;
     public Label tempLbl;
     public Label humidityLbl;
+    public Label visiblLbl;
+    public Label riseLbl;
+    public Label downLbl;
     private List<City> cities; // create a list Cities
 
     List<String> countries;  // create a list of Countries
@@ -160,11 +163,23 @@ public class Controller {
         countryLbl.setText("Country:      " + city.getCountry() + " (" + city.getCode2() + ")");
         populationLabel.setText("Population:    " + formatPopulation(city.getPopulation()));
         Weather weather = new APIWeather().getWeather(city.getName(), city.getCode3());
-        //String temp = String.valueOf(weather.getTemp());
-        String temp = Double.toString(weather.getTemp());
-        String hum = String.valueOf(weather.getHumidity());
-        tempLbl.setText("The temperature: " +temp+ "°");
-        humidityLbl.setText("Humidity: " +hum);
+        if (weather != null) {
+            String temp = String.valueOf(weather.getTemp());
+            //String temp = Double.toString(weather.getTemp());
+            String hum = String.valueOf(weather.getHumidity());
+            String vis = String.valueOf(weather.getLon());
+            tempLbl.setText("The temperature: " + temp + "°C");
+            humidityLbl.setText("Humidity: " + hum + "%");
+            visiblLbl.setText("Visibility: " + vis);
+            riseLbl.setText("Sunrise: " + weather.getSunRise());
+            downLbl.setText("Sunset: " + weather.getSunSet());
+        } else {
+            tempLbl.setText("---");
+            humidityLbl.setText("---");
+            visiblLbl.setText("---");
+            riseLbl.setText("---");
+            downLbl.setText("---");
+        }
         //weather.getTemp();
 
 
