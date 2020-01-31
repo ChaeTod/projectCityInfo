@@ -2,15 +2,19 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -28,9 +32,20 @@ public class Controller {
     public Label visiblLbl;
     public Label riseLbl;
     public Label downLbl;
+    public CheckBox chkBox1;
+    public CheckBox chkBox2;
+    public Label coordLbl;
+    public Button coordBtn;
+    //public Hyperlink link;
     private List<City> cities; // create a list Cities
 
     List<String> countries;  // create a list of Countries
+
+    //VBox vbox = new VBox();
+    //Scene scene = new Scene(vbox);
+    final WebView browser = new WebView();
+    final WebEngine webEngine = browser.getEngine();
+
 
     public Controller() throws SQLException, ClassNotFoundException {
         Database database = new Database();
@@ -91,12 +106,15 @@ public class Controller {
                 comboBox2.getItems().add(s.getName()); // fill the second comboBox with the names of the cities in the selected country
             }
             comboBox2.setDisable(false); // enable the second comboBox
+            chkBox1.setDisable(false);
+            chkBox2.setDisable(false);
         }
         /*
         Database database = new Database();
         comboBox2.getItems().setAll(database.getCities(getComboBox1Value()));
          */
     }
+
 
     public void showNextSelect(ActionEvent actionEvent) {
         if (getComboBox1Value() != null) {
@@ -107,45 +125,48 @@ public class Controller {
     }
 
     public void showAllLabels(ActionEvent actionEvent) {
-        weatherLabel.setVisible(true);
-        populationLabel.setVisible(true);
-        popValueLbl.setVisible(true);
+        //weatherLabel.setVisible(true);
+        //populationLabel.setVisible(true);
+        //popValueLbl.setVisible(true);
+        tempLbl.setVisible(false);
+        humidityLbl.setVisible(false);
         okBtn.setDisable(false);
     }
-/*
-    public String getData() {
-        String cityName = getComboBox2Value();
-        City city = null;  // create an object with type City
-        for (City c : cities) { //run through cities list
-            if (c.getName().equals(cityName)) { //if found city.Name in list cities which is equal to the cityName that we selected in first comboBox
-                city = c; //set to null object city all the data (city.Name, country.Name, population and etc.) from the found city in the list. Now we're able to work with it.
-                break; // if OK - stop further iterations
-            }
-        }
-        if (city == null)
-            return null;
-        String date = city.getName();
-        //date.add(city.getName());
-        return date;
-    }
 
-    public String getCode() {
-        String cityName = getComboBox2Value();
-        City city = null;  // create an object with type City
-        for (City c : cities) { //run through cities list
-            if (c.getName().equals(cityName)) { //if found city.Name in list cities which is equal to the cityName that we selected in first comboBox
-                city = c; //set to null object city all the data (city.Name, country.Name, population and etc.) from the found city in the list. Now we're able to work with it.
-                break; // if OK - stop further iterations
+    /*
+        public String getData() {
+            String cityName = getComboBox2Value();
+            City city = null;  // create an object with type City
+            for (City c : cities) { //run through cities list
+                if (c.getName().equals(cityName)) { //if found city.Name in list cities which is equal to the cityName that we selected in first comboBox
+                    city = c; //set to null object city all the data (city.Name, country.Name, population and etc.) from the found city in the list. Now we're able to work with it.
+                    break; // if OK - stop further iterations
+                }
             }
+            if (city == null)
+                return null;
+            String date = city.getName();
+            //date.add(city.getName());
+            return date;
         }
-        if (city == null)
-            return null;
-        String date = city.getCode2();
-        //date.add(city.getCode2());
-        return date;
-    }
 
-*/
+        public String getCode() {
+            String cityName = getComboBox2Value();
+            City city = null;  // create an object with type City
+            for (City c : cities) { //run through cities list
+                if (c.getName().equals(cityName)) { //if found city.Name in list cities which is equal to the cityName that we selected in first comboBox
+                    city = c; //set to null object city all the data (city.Name, country.Name, population and etc.) from the found city in the list. Now we're able to work with it.
+                    break; // if OK - stop further iterations
+                }
+            }
+            if (city == null)
+                return null;
+            String date = city.getCode2();
+            //date.add(city.getCode2());
+            return date;
+        }
+
+    */
     public void getAllInfo(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String cityName = getComboBox2Value();
         City city = null;  // create an object with type City
@@ -173,6 +194,8 @@ public class Controller {
             visiblLbl.setText("Visibility: " + vis);
             riseLbl.setText("Sunrise: " + weather.getSunRise());
             downLbl.setText("Sunset: " + weather.getSunSet());
+            coordLbl.setText("http://www.google.com/maps/place/" + weather.getLat() +","+weather.getLon());
+
         } else {
             tempLbl.setText("---");
             humidityLbl.setText("---");
@@ -180,6 +203,18 @@ public class Controller {
             riseLbl.setText("---");
             downLbl.setText("---");
         }
+
+        //Hyperlink link = new Hyperlink();
+        //link.setText("https://maps.google.com/?q=<"+weather.getLon()+">,<"+weather.getLat()+">");
+        //coordLbl.setText("http://www.google.com/maps/place/" + weather.getLat() +","+weather.getLon()+);
+        System.out.println(coordLbl);;
+        /*coordLbl.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                System.out.println("This link is clicked");
+            }
+        });
+        */
         //weather.getTemp();
 
 
@@ -229,4 +264,56 @@ public class Controller {
          */
     }
 
+    public void setLbl(ActionEvent actionEvent) {
+        if (chkBox1.isSelected()) {
+            weatherLabel.setVisible(true);
+            tempLbl.setVisible(true);
+            humidityLbl.setVisible(true);
+            visiblLbl.setVisible(true);
+            riseLbl.setVisible(true);
+            downLbl.setVisible(true);
+        } else {
+            weatherLabel.setVisible(false);
+            tempLbl.setVisible(false);
+            humidityLbl.setVisible(false);
+            visiblLbl.setVisible(false);
+            riseLbl.setVisible(false);
+            downLbl.setVisible(false);
+        }
+        if (chkBox2.isSelected()) {
+            populationLabel.setVisible(true);
+            popValueLbl.setVisible(true);
+            cityLbl.setVisible(true);
+            countryLbl.setVisible(true);
+        } else {
+            populationLabel.setVisible(false);
+            popValueLbl.setVisible(false);
+            cityLbl.setVisible(false);
+            countryLbl.setVisible(false);
+        }
+    }
+
+    public void goToCoord() {
+        System.out.println("The label inside the method: " +coordLbl);
+        Hyperlink link = new Hyperlink(coordLbl.getText());
+        //link.setText("http://www.google.com/maps/place/" + weather.getLat() +","+weather.getLon());
+        System.out.println("The link inside the method: " +link);
+        link.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                webEngine.load("http://www.google.com/");
+                //getChildren().add(browser);
+            }
+        });
+        /*
+        Hyperlink link = new Hyperlink();
+        link.setText(coordLbl.getText());
+        link.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                System.out.println("This link is clicked");
+            }
+        });
+    */
+    }
 }

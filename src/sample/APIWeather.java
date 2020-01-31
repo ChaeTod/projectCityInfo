@@ -9,15 +9,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
+
 
 public class APIWeather {
 
@@ -62,8 +56,11 @@ public class APIWeather {
                 System.out.println("The main humidity is: " + humidity);
                 System.out.println("The visibility is: " + visibility);
 
+                double lon = json.getJSONObject("coord").getDouble("lon");
+                double lat = json.getJSONObject("coord").getDouble("lat");
+
                 //return new Weather(cityName, countryCode, temp, humidity, visibility, 0, riseTime, setTime);
-                return new Weather(null, null, temp, humidity, visibility, 0, riseTime, setTime);
+                return new Weather(null, null, temp, humidity, visibility, lon, lat, riseTime, setTime);
                 //weather =
                 //return weather;
 
